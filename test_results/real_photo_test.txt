@@ -1,0 +1,27 @@
+Cross-domain test: real, unseen ASL alphabet photos
+(source: Roboflow-exported photo dataset, github.com/paulinamoskwa/Real-Time-Sign-Language)
+One photo per available letter (A-Y, excluding J/Z which need motion), run through the
+full detection+classification pipeline (hand_tracker.py + realtime_recognition.py).
+
+Hand detection (MediaPipe HandLandmarker): 20/22 photos (90.9%)
+Letter classification accuracy on detected hands: 1/20 (5%)
+
+Interpretation:
+- Hand detection generalizes well: MediaPipe's landmarker correctly located
+  the hand in 20 of 22 real, previously-unseen photos taken with a different
+  camera/background than the training data.
+- Letter classification collapses out-of-domain. The classifier is a
+  RandomForest trained on raw 28x28 grayscale pixels from the Sign Language
+  MNIST dataset, which was captured with one fixed camera/background/lighting
+  setup. Raw-pixel classifiers memorize appearance, not geometry, so they do
+  not transfer to a different camera, skin tone, lighting, or background.
+  This is a well-known and expected limitation of this modeling approach,
+  not a bug in the detection/inference code (which ran without errors on
+  every image).
+
+Recommended fix for real deployment (implemented as src/collect_data.py):
+  Record your own labeled samples through the SAME webcam and SAME
+  detect->crop->resize pipeline used at inference time, then retrain
+  train_classifier.py on that data (optionally combined with sign_mnist).
+  This closes the domain gap because train and inference data come from
+  the same distribution.

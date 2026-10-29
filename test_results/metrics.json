@@ -1,0 +1,10 @@
+{
+  "train_samples": 33689,
+  "test_samples": 7172,
+  "num_classes": 24,
+  "train_time_seconds": 318.64,
+  "test_accuracy": 0.9566,
+  "external_train_samples": 6234,
+  "external_holdout_samples": 1572,
+  "external_holdout_accuracy": 0.2907
+}

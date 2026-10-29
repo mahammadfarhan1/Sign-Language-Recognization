@@ -1,0 +1,11 @@
+{
+  "external_train_samples": 6198,
+  "external_holdout_samples": 1565,
+  "webcam_train_samples": 420,
+  "webcam_holdout_samples": 106,
+  "external_holdout_accuracy": 0.9252,
+  "webcam_holdout_accuracy": 0.6226,
+  "model": "SVM (RBF)",
+  "holdout_accuracy": 0.906,
+  "num_classes": 24
+}
